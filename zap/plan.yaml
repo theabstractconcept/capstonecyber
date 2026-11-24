@@ -1,0 +1,35 @@
+env:
+  contexts:
+    - name: swfts
+      urls: ["https://127.0.0.1:5443"]
+      includePaths: ["https://127.0.0.1:5443.*"]
+      excludePaths: [".*/logout", ".*/delete/.*"]
+  parameters:
+    failOnError: false
+    progressToStdout: true
+jobs:
+  - type: replacer
+    parameters: {deleteAllRules: true}
+    rules:
+      - description: authenticated admin session
+        matchType: req_header
+        matchString: Cookie
+        matchRegex: false
+        replacementString: "<session-cookie-redacted>"
+  - type: spider
+    parameters: {context: swfts, url: "https://127.0.0.1:5443/dashboard", maxDuration: 2}
+  - type: passiveScan-wait
+    parameters: {maxDuration: 2}
+  - type: activeScan
+    parameters: {context: swfts, maxScanDurationInMins: 6, maxRuleDurationInMins: 1}
+  - type: report
+    parameters:
+      template: traditional-html
+      reportDir: /home/claude/secure_portal/zap
+      reportFile: zap_report.html
+      reportTitle: SWFTS - OWASP ZAP scan (local)
+  - type: report
+    parameters:
+      template: traditional-json
+      reportDir: /home/claude/secure_portal/zap
+      reportFile: zap_report.json

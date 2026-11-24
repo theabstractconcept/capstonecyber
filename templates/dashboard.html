@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Files{% endblock %}
+{% block content %}
+<section class="card">
+  <h2>Upload a file</h2>
+  <form method="post" action="{{ url_for('upload') }}" enctype="multipart/form-data" class="row">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <input type="file" name="file" required>
+    {% if user['role'] == 'admin' %}
+    <select name="department">
+      {% for d in departments %}<option>{{ d }}</option>{% endfor %}
+    </select>
+    {% else %}
+    <span class="tag">{{ user['department'] }}</span>
+    {% endif %}
+    <button class="btn">Encrypt &amp; upload</button>
+  </form>
+  <p class="muted">Allowed: pdf, txt, csv, png, jpg, docx, xlsx, pptx · max 10 MB</p>
+</section>
+
+<section class="card">
+  <h2>{% if user['role'] == 'admin' %}All department files{% else %}{{ user['department'] }} department files{% endif %}</h2>
+  {% if files %}
+  <table>
+    <thead><tr><th>File</th><th>Dept</th><th>Uploader</th><th>Size</th><th>Uploaded (UTC)</th><th></th></tr></thead>
+    <tbody>
+    {% for item in files %}{% set f = item.row %}
+      <tr>
+        <td>{{ f['orig_name'] }}</td><td>{{ f['department'] }}</td><td>{{ f['uploader'] }}</td>
+        <td>{{ '%.1f' % (f['size'] / 1024) }} KB</td><td>{{ f['uploaded_at'] }}</td>
+        <td class="actions">
+          <a class="btn small" href="{{ url_for('download', fid=f['id']) }}">Download</a>
+          {% if item.can_delete %}
+          <form method="post" action="{{ url_for('delete', fid=f['id']) }}" class="inline">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <button class="btn small danger">Delete</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}<p class="muted">No files yet.</p>{% endif %}
+</section>
+{% endblock %}

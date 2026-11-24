@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}SWFTS{% endblock %} · Secure File Portal</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="{{ url_for('index') }}">🔒 SWFTS <span>Secure File Transfer</span></a>
+  {% if user %}
+  <nav>
+    <a href="{{ url_for('dashboard') }}">Files</a>
+    {% if user['role'] == 'admin' %}
+      <a href="{{ url_for('users') }}">Users</a>
+      <a href="{{ url_for('audit_log') }}">Audit log</a>
+    {% endif %}
+    <a href="{{ url_for('change_password') }}">Password</a>
+    <span class="who">{{ user['username'] }} · {{ user['role'] }} · {{ user['department'] }}</span>
+    <form method="post" action="{{ url_for('logout') }}" class="inline">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <button class="link">Sign out</button>
+    </form>
+  </nav>
+  {% endif %}
+</header>
+<main>
+  {% with msgs = get_flashed_messages(with_categories=true) %}
+    {% for cat, m in msgs %}<div class="flash {{ cat }}">{{ m }}</div>{% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer>Local demo · HTTPS with self-signed certificate · Files encrypted with AES-256-GCM</footer>
+</body>
+</html>

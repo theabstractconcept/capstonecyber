@@ -1,0 +1,25 @@
+:root{--bg:#f4f6fa;--fg:#1d2433;--card:#fff;--accent:#1f5fbf;--muted:#6a7488;--line:#dde2ec;--err:#b42318;--ok:#067647}
+@media (prefers-color-scheme:dark){:root{--bg:#12161f;--fg:#e6e9f0;--card:#1b2130;--accent:#6ea2ff;--muted:#98a2b8;--line:#2c3447;--err:#ff8a80;--ok:#6ee7a8}}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.5 system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--fg)}
+.top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:12px 24px;background:var(--card);border-bottom:1px solid var(--line)}
+.brand{font-weight:700;color:var(--fg);text-decoration:none}.brand span{font-weight:400;color:var(--muted);margin-left:6px}
+nav{display:flex;flex-wrap:wrap;gap:14px;align-items:center}nav a{color:var(--accent);text-decoration:none}
+.who{color:var(--muted);font-size:13px}
+main{max-width:1000px;margin:24px auto;padding:0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:20px}
+.narrow{max-width:420px;margin:48px auto}
+h1,h2{margin:0 0 12px}h2{font-size:18px}
+label{display:block;margin-bottom:12px;font-weight:600}
+input,select{display:block;width:100%;padding:8px 10px;margin-top:4px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);font:inherit}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.row input,.row select{width:auto;margin:0}
+.btn{display:inline-block;background:var(--accent);color:#fff;border:0;border-radius:6px;padding:8px 14px;font:inherit;cursor:pointer;text-decoration:none}
+.btn.small{padding:4px 10px;font-size:13px}.btn.danger{background:var(--err)}
+button.link{background:none;border:0;color:var(--accent);cursor:pointer;font:inherit}
+form.inline{display:inline}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line);font-size:14px}
+.actions{white-space:nowrap}.muted{color:var(--muted);font-size:13px}
+.tag{background:var(--bg);border:1px solid var(--line);padding:3px 10px;border-radius:99px;font-size:13px}
+.flash{padding:10px 14px;border-radius:6px;margin-bottom:14px;border:1px solid var(--line);background:var(--card)}
+.flash.error{color:var(--err);border-color:var(--err)}.flash.ok{color:var(--ok);border-color:var(--ok)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}

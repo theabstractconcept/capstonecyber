@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Sign in</h1>
+  <form method="post" autocomplete="off">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label>Username <input name="username" required maxlength="32" autofocus></label>
+    <label>Password <input name="password" type="password" required></label>
+    <button class="btn">Sign in</button>
+  </form>
+  <p class="muted">Authorised department staff only. Activity is logged.</p>
+</section>
+{% endblock %}

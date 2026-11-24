@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Audit log{% endblock %}
+{% block content %}
+<section class="card">
+  <h2>Audit log (latest 200)</h2>
+  <table>
+    <thead><tr><th>Time (UTC)</th><th>User</th><th>Action</th><th>Detail</th><th>IP</th></tr></thead>
+    <tbody>
+    {% for r in rows %}
+      <tr><td>{{ r['ts'] }}</td><td>{{ r['username'] }}</td><td>{{ r['action'] }}</td>
+          <td>{{ r['detail'] }}</td><td>{{ r['ip'] }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

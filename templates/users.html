@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+{% block content %}
+<section class="card">
+  <h2>Create user</h2>
+  <form method="post" class="row" autocomplete="off">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <input name="username" placeholder="username" required maxlength="32">
+    <input name="password" type="password" placeholder="password (10+ chars)" required>
+    <select name="role">{% for r in roles %}<option>{{ r }}</option>{% endfor %}</select>
+    <select name="department">{% for d in departments %}<option>{{ d }}</option>{% endfor %}</select>
+    <button class="btn">Create</button>
+  </form>
+</section>
+<section class="card">
+  <h2>Accounts</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Username</th><th>Role</th><th>Department</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+    {% for r in rows %}
+      <tr><td>{{ r['id'] }}</td><td>{{ r['username'] }}</td><td>{{ r['role'] }}</td>
+          <td>{{ r['department'] }}</td><td>{{ 'active' if r['active'] else 'disabled' }}</td>
+          <td><form method="post" action="{{ url_for('toggle_user', uid=r['id']) }}" class="inline">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <button class="btn small">{{ 'Disable' if r['active'] else 'Enable' }}</button></form></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
